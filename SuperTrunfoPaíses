@@ -1,0 +1,138 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    // ====== CADASTRO DE CARTAS ======
+    char pais1[30] = "Brasil";
+    int populacao1 = 214000000;
+    float area1 = 8516000.0;
+    float pib1 = 2200000000000.0;
+    int pontos1 = 45;
+    float densidade1 = populacao1 / area1;
+    float pibPerCapita1 = pib1 / populacao1; 
+
+    char pais2[30] = "Argentina";
+    int populacao2 = 45000000;
+    float area2 = 2780000.0;            
+    float pib2 = 450000000000.0;
+    int pontos2 = 30;
+    float densidade2 = populacao2 / area2;
+    float pibPerCapita2 = pib2 / populacao2;
+
+    int opcao, atributo1, atributo2;
+    float soma1 = 0, soma2 = 0;
+    char nomePais1[30], nomePais2[30];
+    strcpy(nomePais1, pais1);
+    strcpy(nomePais2, pais2);
+    float valor1_c1 = 0, valor1_c2 = 0;
+    float valor2_c1 = 0, valor2_c2 = 0;
+
+    do {
+        printf("==============================================\n"); 
+        printf("             SUPER TRUNFO - PAÍSES\n");
+        printf("==============================================\n\n");
+        printf("1 - Jogar rodada\n");
+        printf("2 - Ver instruções\n");
+        printf("0 - Sair do jogo\n");
+        printf("==============================================\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                printf("\n===== ESCOLHA DE ATRIBUTOS =====\n");
+                printf("1 - População\n");
+                printf("2 - Área\n");
+                printf("3 - PIB\n");
+                printf("4 - Pontos Turísticos\n");
+                printf("5 - Densidade Demográfica\n");
+                printf("================================\n");
+
+                printf("Escolha o PRIMEIRO atributo: ");
+                scanf("%d", &atributo1);
+
+
+                printf("\nAgora escolha o SEGUNDO atributo (diferente do primeiro): ");
+                scanf("%d", &atributo2);
+                     
+
+                // Evita atributos repetidos
+                if (atributo1 == atributo2) {
+                    printf("\nVocê escolheu o mesmo atributo duas vezes! Tente novamente.\n");
+                    break;
+                }
+
+                // Primeiro atributo
+                switch (atributo1) {
+                    case 1: valor1_c1 = populacao1; valor1_c2 = populacao2; break;
+                    case 2: valor1_c1 = area1;       valor1_c2 = area2;       break;
+                    case 3: valor1_c1 = pib1;        valor1_c2 = pib2;        break;
+                    case 4: valor1_c1 = pontos1;     valor1_c2 = pontos2;     break;
+                    case 5: valor1_c1 = densidade1;  valor1_c2 = densidade2;  break;
+                    default: printf("Atributo inválido!\n"); break;
+                }
+
+                // Segundo atributo
+                switch (atributo2) {
+                    case 1: valor2_c1 = populacao1; valor2_c2 = populacao2; break;
+                    case 2: valor2_c1 = area1;       valor2_c2 = area2;       break;
+                    case 3: valor2_c1 = pib1;        valor2_c2 = pib2;        break;
+                    case 4: valor2_c1 = pontos1;     valor2_c2 = pontos2;     break;
+                    case 5: valor2_c1 = densidade1;  valor2_c2 = densidade2;  break;
+                    default: printf("Atributo inválido!\n"); break;
+                }
+
+                // Exibe os atributos escolhidos e valores
+                printf("\n===== COMPARAÇÃO =====\n");
+                printf("País 1: %s\n", nomePais1);
+                printf("País 2: %s\n", nomePais2);
+                
+                printf("\nAtributo 1 escolhido: %d\n", atributo1);
+                printf("%s: %.2f | %s: %.2f\n", nomePais1, valor1_c1, nomePais2, valor1_c2);
+
+                printf("\nAtributo 2 escolhido: %d\n", atributo2);
+                printf("%s: %.2f | %s: %.2f\n", nomePais1, valor2_c1, nomePais2, valor2_c2);   
+
+                // Calcula soma dos atributos (inverte lógica para densidade)
+                soma1 = ((atributo1 == 5 ? (1 / valor1_c1) : valor1_c1) +
+                         (atributo2 == 5 ? (1 / valor2_c1) : valor2_c1));
+                soma2 = ((atributo1 == 5 ? (1 / valor1_c2) : valor1_c2) +
+                         (atributo2 == 5 ? (1 / valor2_c2) : valor2_c2));    
+
+                printf("\nSoma total de atributos:\n");
+                printf("%s: %.2f\n", nomePais1, soma1);
+                printf("%s: %.2f\n", nomePais2, soma2);
+
+                // Determina vencedor
+                if (soma1 > soma2)
+                    printf("\nResultado: %s venceu! 🏆\n", nomePais1);
+                else if (soma2 > soma1)
+                    printf("\nResultado: %s venceu! 🏆\n", nomePais2);
+                else
+                    printf("\nResultado: Empate! 🤝\n");
+                break;
+
+            case 2:
+                printf("\n===== INSTRUÇÕES =====\n");
+                printf("1. Escolha dois atributos diferentes.\n");
+                printf("2. Cada atributo vencido vale 1 ponto.\n");
+                printf("3. Regra Padrão: Maior valor vence.\n");
+                printf("4. Regra Especial: Na DENSIDADE DEMOGRÁFICA, o MENOR valor vence.\n");
+                printf("5. O país com maior pontuação final vence a rodada.\n");
+                printf("=======================\n");
+                break;
+
+            case 0:
+                printf("\nSaindo do jogo... Até logo!\n");
+                break;
+
+            default:
+                printf("\nOpção inválida! Tente novamente.\n");
+        }
+
+    } while (opcao != 0);
+   
+
+    return 0;
+}
+// Fim do código do jogo Super Trunfo - Países
